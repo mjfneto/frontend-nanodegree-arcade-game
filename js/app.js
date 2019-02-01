@@ -2,12 +2,20 @@
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+    this.departure = -150;
+    this.x = this.departure;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.x = -150;
     this.sprite = 'images/enemy-bug.png';
 };
+
+Enemy.prototype.repositionRandomArbitrary = function(min, max) {
+      let randomArbitrary = Math.floor(Math.random() * (max - min) + min);
+      if (randomArbitrary % 2 !== 0) {
+        return randomArbitrary;
+      }
+      return this.repositionRandomArbitrary(min, max);
+    };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -16,9 +24,9 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.factor * dt;
-    this.y = this.yCor;
     if (this.x > ctx.canvas.width) {
-      this.x = this.departure;
+        this.x = this.departure;
+        this.y = (83/2) * this.repositionRandomArbitrary(1,6);
     }
 };
 
@@ -31,13 +39,10 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-var Player = function() {
+const Player = function() {
     this.x = 202;
     this.y = 249 + 83 / 2;
     this.sprite = 'images/char-boy.png';
-};
-
-Player.prototype.update = function(dt) {
 };
 
 Player.prototype.render = function() {
@@ -63,24 +68,18 @@ Player.prototype.handleInput = function (key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var enemy1 = new Enemy();
-var enemy2 = new Enemy();
-var enemy3 = new Enemy();
-var player = new Player();
+const enemy1 = new Enemy();
+const enemy2 = new Enemy();
+const enemy3 = new Enemy();
+const player = new Player();
 
 enemy1.factor = 100;
-enemy1.departure = -300;
-enemy1.yCor = 83/2;
 
 enemy2.factor = 500;
-enemy2.departure = -1000;
-enemy2.yCor = 83 + 83/2;
 
 enemy3.factor = 350;
-enemy3.departure = -100;
-enemy3.yCor = 83/2 * 5;
 
-var allEnemies = [];
+const allEnemies = [];
 
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
