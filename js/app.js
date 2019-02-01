@@ -4,6 +4,7 @@ var Enemy = function() {
     // we've provided one for you to get started
     this.departure = -150;
     this.x = this.departure;
+    this.y = 83/2 * this.repositionRandomArbitrary(1,6);
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -28,6 +29,8 @@ Enemy.prototype.update = function(dt) {
         this.x = this.departure;
         this.y = (83/2) * this.repositionRandomArbitrary(1,6);
     }
+    console.log(enemy1.x);
+    console.log(enemy1.y);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -51,12 +54,10 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.update = function() {
-    console.log(this.y);
-    console.log(this.departure);
     if (this.y === -41.5) {
-        console.log("hey");
         this.y = this.departure;
     }
+
 };
 
 Player.prototype.handleInput = function (key) {
@@ -94,6 +95,9 @@ const allEnemies = [];
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
+
+const checkCollisions = function() {
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
