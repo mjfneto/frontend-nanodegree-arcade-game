@@ -40,13 +40,23 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 const Player = function() {
+    this.departure = 249 + 83 / 2;
     this.x = 202;
-    this.y = 249 + 83 / 2;
+    this.y = this.departure;
     this.sprite = 'images/char-boy.png';
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.update = function() {
+    console.log(this.y);
+    console.log(this.departure);
+    if (this.y === -41.5) {
+        console.log("hey");
+        this.y = this.departure;
+    }
 };
 
 Player.prototype.handleInput = function (key) {
