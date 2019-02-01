@@ -4,7 +4,7 @@ var Enemy = function() {
     // we've provided one for you to get started
     this.departure = -150;
     this.x = this.departure;
-    this.y = 83/2 * this.repositionRandomArbitrary(1,6);
+    this.y = 41 * this.repositionRandomArbitrary(1,6);
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -27,10 +27,8 @@ Enemy.prototype.update = function(dt) {
     this.x += this.factor * dt;
     if (this.x > ctx.canvas.width) {
         this.x = this.departure;
-        this.y = (83/2) * this.repositionRandomArbitrary(1,6);
+        this.y = (41) * this.repositionRandomArbitrary(1,6);
     }
-    console.log(enemy1.x);
-    console.log(enemy1.y);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -43,7 +41,7 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 const Player = function() {
-    this.departure = 249 + 83 / 2;
+    this.departure = 249 + 41;
     this.x = 202;
     this.y = this.departure;
     this.sprite = 'images/char-boy.png';
@@ -57,7 +55,6 @@ Player.prototype.update = function() {
     if (this.y === -41.5) {
         this.y = this.departure;
     }
-
 };
 
 Player.prototype.handleInput = function (key) {
@@ -68,10 +65,10 @@ Player.prototype.handleInput = function (key) {
         this.x += 101;
     };
     if (key === 'up' && this.y > 0) {
-        this.y -= 83;
+        this.y -= 82;
     };
     if (key === 'down' && this.y <= 290.5) {
-        this.y += 83;
+        this.y += 82;
     }
 };
 
@@ -95,9 +92,6 @@ const allEnemies = [];
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
-
-const checkCollisions = function() {
-}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
