@@ -4,7 +4,7 @@ var Enemy = function() {
     // we've provided one for you to get started
     this.departure = -150;
     this.x = this.departure;
-    this.y = 41 * this.repositionRandomArbitrary(1,6);
+    this.y = (41 * this.repositionRandomArbitrary(1,6));
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -27,7 +27,7 @@ Enemy.prototype.update = function(dt) {
     this.x += this.factor * dt;
     if (this.x > ctx.canvas.width) {
         this.x = this.departure;
-        this.y = (41) * this.repositionRandomArbitrary(1,6);
+        this.y = (41 * this.repositionRandomArbitrary(1,6));
     }
 };
 
@@ -41,9 +41,10 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 const Player = function() {
-    this.departure = 249 + 41;
-    this.x = 202;
-    this.y = this.departure;
+    this.departureY = 369;
+    this.departureX = 202;
+    this.x = this.departureX;
+    this.y = this.departureY;
     this.sprite = 'images/char-boy.png';
 };
 
@@ -52,8 +53,9 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.update = function() {
-    if (this.y === -41.5) {
-        this.y = this.departure;
+    if (this.y === -41) {
+        this.x === this.departureX;
+        this.y = this.departureY;
     }
 };
 
@@ -67,7 +69,7 @@ Player.prototype.handleInput = function (key) {
     if (key === 'up' && this.y > 0) {
         this.y -= 82;
     };
-    if (key === 'down' && this.y <= 290.5) {
+    if (key === 'down' && this.y <= 294.5) {
         this.y += 82;
     }
 };
@@ -92,6 +94,18 @@ const allEnemies = [];
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
+
+const checkCollisions = function(){
+    allEnemies.forEach(function(enemy){
+        if ((
+            Math.round(Math.round(enemy.x) / 10) * 10 ===
+            Math.round(Math.round(player.x - 82) / 10) * 10
+        ) && enemy.y === player.y) {
+            player.x = player.departureX;
+            player.y = player.departureY;
+        }
+    });
+};
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
