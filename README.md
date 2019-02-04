@@ -4,7 +4,7 @@
 
 - [Instructions](#instructions)
 
-Hi there, and welcome "Get to da wada, now!". This game is inspired by the classic arcade game "Frogger". It works pretty much the same. By using the arrow keys (⇐, ⇑, ⇓, ⇒) on your keyboard, try to make your character cross safely the brick road where the ladybugs are in their rush hour traffic. If you are hit don't worry, you get one more chance to cross the road.
+Hi there, and welcome "Get to da wada, now!". This game is inspired by the classic arcade game "Frogger". It works pretty much the same. By using the arrow keys (⇐, ⇑, ⇓, ⇒) on your keyboard, try to make your character cross safely the brick road where the ladybugs are in their rush hour traffic. If you are hit don't worry, you get one more chance to cross the road. And, if you happen to find a star on the way, try to catch it make extra points!
 
 - [Contributing](#contributing)
 
