@@ -4,18 +4,20 @@ var Enemy = function() {
     // we've provided one for you to get started
     this.departure = -150;
     this.x = this.departure;
-    this.y = (41 * this.repositionRandomArbitrary(1,6));
+    this.y = 82 * this.randomArbitrary(1,4);
+    this.width = 100;
+    this.height = 150;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 };
 
-Enemy.prototype.repositionRandomArbitrary = function(min, max) {
+Enemy.prototype.randomArbitrary = function(min, max) {
       let randomArbitrary = Math.floor(Math.random() * (max - min) + min);
       if (randomArbitrary % 2 !== 0) {
         return randomArbitrary;
       }
-      return this.repositionRandomArbitrary(min, max);
+      return this.randomArbitrary(min, max);
     };
 
 // Update the enemy's position, required method for game
@@ -27,13 +29,17 @@ Enemy.prototype.update = function(dt) {
     this.x += this.factor * dt;
     if (this.x > ctx.canvas.width) {
         this.x = this.departure;
-        this.y = (41 * this.repositionRandomArbitrary(1,6));
+        this.y = 82 * this.randomArbitrary(1,4);
+        this.factor = 100 * this.randomArbitrary(3, 11);
+    }
+    if (this.factor === 900 && this.x > ctx.canvas.width) {
+      this.factor = 100 * this.randomArbitrary(1, 7);
     }
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
 };
 
 // Now write your own player class
@@ -41,19 +47,21 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 const Player = function() {
-    this.departureY = 369;
     this.departureX = 202;
+    this.departureY = 410;
     this.x = this.departureX;
     this.y = this.departureY;
+    this.width = 100;
+    this.height = 150;
     this.sprite = 'images/char-boy.png';
 };
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
 };
 
 Player.prototype.update = function() {
-    if (this.y === -41) {
+    if (this.y < 82) {
         this.x === this.departureX;
         this.y = this.departureY;
     }
@@ -69,10 +77,31 @@ Player.prototype.handleInput = function (key) {
     if (key === 'up' && this.y > 0) {
         this.y -= 82;
     };
-    if (key === 'down' && this.y <= 294.5) {
+    if (key === 'down' && this.y < 390) {
         this.y += 82;
     }
 };
+
+var Star = function() {
+    this.randomArbitrary = function (min, max) {
+        let randomArbitrary = Math.floor(
+          Math.random() * (max - min) + min
+        );
+        return randomArbitrary;
+    }
+    this.x = 101 * this.randomArbitrary(0,5);
+    this.y = 82 * this.randomArbitrary(1,4);
+    this.width = 100;
+    this.height = 150;
+    this.sprite = 'images/Star.png';
+}
+
+Star.prototype.update = function () {
+};
+
+Star.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -82,8 +111,9 @@ const enemy1 = new Enemy();
 const enemy2 = new Enemy();
 const enemy3 = new Enemy();
 const player = new Player();
+const star = new Star();
 
-enemy1.factor = 100;
+enemy1.factor = 200;
 
 enemy2.factor = 500;
 
@@ -105,6 +135,13 @@ const checkCollisions = function(){
             player.y = player.departureY;
         }
     });
+};
+
+const checkCatches = function () {
+    if (player.y === star.y && star.x === player.x) {
+        star.width = 0;
+        star.height = 0;
+    }
 };
 
 // This listens for key presses and sends the keys to your
