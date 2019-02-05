@@ -13,12 +13,9 @@ var Enemy = function() {
 };
 
 Enemy.prototype.randomArbitrary = function(min, max) {
-      let randomArbitrary = Math.floor(Math.random() * (max - min) + min);
-      if (randomArbitrary % 2 !== 0) {
-        return randomArbitrary;
-      };
-      return this.randomArbitrary(min, max);
-    };
+    let randomArbitrary = Math.floor(Math.random() * (max - min) + min);
+    return randomArbitrary;
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -27,6 +24,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.factor * dt;
+    console.log(this.y);
     if (this.x > ctx.canvas.width) {
         this.x = this.departure;
         this.y = 82 * this.randomArbitrary(1,4);
@@ -61,7 +59,10 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
 };
 
-Player.prototype.update = function() {
+// Updates player's, required method for game
+// Parameter: star, handles star's positioning if
+// player get to the water (y < 82);
+Player.prototype.update = function(star) {
     if (this.y < 82) {
         this.x === this.departureX;
         this.y = this.departureY;
